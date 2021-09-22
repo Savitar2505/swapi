@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
+import Spinner from '../spinner'
+import ErrorIndicator from '../error-indicator'
 
 import './random-planet.css';
+
 
 export default class RandomPlanet extends Component {
   swapi = new SwapiService()
 
   state = {
-      planet: {}
+      planet: {},
+      load: true,
+      error: false,
   }
 
   updatePlanet = () => {
@@ -15,10 +20,15 @@ export default class RandomPlanet extends Component {
 
     this.swapi.getPlanet(id).then((data) => {
       this.setState({
-        planet: data
+        planet: data,
+        load: false,
+      })
+    }).catch((err) => {
+      this.setState({
+        load: false,
+        error: true,
       })
     })
-
   }
 
   componentDidMount() {
@@ -33,6 +43,14 @@ export default class RandomPlanet extends Component {
   render() {
     const {id, name, population, rotationPeriod, diameter} = this.state.planet;
     const url = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
+
+    if (this.state.load) {
+      return <Spinner />
+    }
+
+    if (this.state.error) {
+      return <ErrorIndicator />
+    }
 
     return (
       <div className="random-planet jumbotron rounded">
