@@ -1,21 +1,8 @@
 import React, { Component } from 'react';
 import './item-list.css';
-import SwapiService from '../../services/swapi-service';
 
 
-export default class ItemList extends Component {
-  swapi = new SwapiService()
-
-  state = {
-    items: []
-  }
-
-  componentDidMount = () => {
-    this.swapi.getAllPeople().then((data) => {
-      this.setState({items: data})
-    })
-  }
-
+class ItemList extends Component {
   prepareItems = (itemList) => {
     return itemList.map((item) => {
       return (
@@ -31,7 +18,7 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const content = this.prepareItems(this.state.items)
+    const content = this.prepareItems(this.props.data)
 
     return (
       <ul className="item-list list-group">
@@ -40,3 +27,5 @@ export default class ItemList extends Component {
     );
   }
 }
+
+export default ItemList

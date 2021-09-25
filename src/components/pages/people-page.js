@@ -1,6 +1,6 @@
 import React from 'react';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import {PeopleList, PlanetList, StarshipList} from '../sw-components'
+import {ItemDetails, Record} from '../person-details';
 import Row from '../row';
 
 
@@ -15,16 +15,18 @@ class PeoplePage extends React.Component {
 
   render() {
     const itemList = (
-      <ItemList
+      <PeopleList
         onItemSelected={this.onItemSelected}
         renderFunction={(item) => <span>{item.name} ({item.birthYear})</span>}
       />
     )
 
     const personDetails = (
-      <PersonDetails
-        selectedItemId={this.state.selectedItemId}
-      />
+      <ItemDetails selectedItemId={this.state.selectedItemId}>
+        <Record label='Name' fieldName='name' />
+        <Record label='Eye color' fieldName='eyeColor' />
+        <Record label='Gender' fieldName='gender' />
+      </ItemDetails>
     )
 
     return (
