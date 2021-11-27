@@ -1,6 +1,5 @@
 import React from 'react'
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import {PeopleList, PersonDetails} from '../sw-components';
 import Row from '../row';
 
 class PeoplePage extends React.Component {
@@ -15,7 +14,7 @@ class PeoplePage extends React.Component {
   }
 
   render() {
-    const left = <ItemList onSelectItem={this.onSelectItem} />
+    const left = <PeopleList onSelectItem={this.onSelectItem} />
     const right = <PersonDetails selectedItem={this.state.selectedItem} />
 
     return (

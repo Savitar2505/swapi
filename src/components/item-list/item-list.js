@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi-service';
 import './item-list.css';
 
-export default class ItemList extends Component {
+
+class ItemList extends Component {
   state = {
     data: []
   }
 
-  swapi = new SwapiService()
-
   componentDidMount = () => {
-    this.swapi.getAllPeople().then((data) => {
+    this.props.getData().then((data) => {
       this.setState({
         data: data
       })
@@ -33,3 +31,5 @@ export default class ItemList extends Component {
     );
   }
 }
+
+export default ItemList

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
-import './person-details.css';
+import './item-details.css';
 
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
   state = {
     item: {},
     itemImg: ''
@@ -14,7 +14,7 @@ export default class PersonDetails extends Component {
   componentDidMount = () => {
     const id = this.props.selectedItem;
 
-    this.swapi.getPerson(id).then((data) => {
+    this.props.getData(id).then((data) => {
       this.setState({
         item: data
       })
@@ -25,7 +25,7 @@ export default class PersonDetails extends Component {
     if (oldProps.selectedItem != this.props.selectedItem) {
       const id = this.props.selectedItem;
 
-      this.swapi.getPerson(id).then((data) => {
+      this.props.getData(id).then((data) => {
         this.setState({
           item: data
         })
