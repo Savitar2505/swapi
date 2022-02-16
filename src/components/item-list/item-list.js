@@ -2,34 +2,21 @@ import React, { Component } from 'react';
 import './item-list.css';
 
 
-class ItemList extends Component {
-  state = {
-    data: []
-  }
-
-  componentDidMount = () => {
-    this.props.getData().then((data) => {
-      this.setState({
-        data: data
-      })
-    })
-  }
+export default class ItemList extends Component {
 
   render() {
-    const content = this.state.data.map(item => {
-      return (
-        <li key={item.id} onClick={() => this.props.onSelectItem(item.id)} className="list-group-item">
-          {item.name}
-        </li>
-      )
-    })
-
     return (
       <ul className="item-list list-group">
-        {content}
+        <li className="list-group-item">
+          Luke Skywalker
+        </li>
+        <li className="list-group-item">
+          Darth Vader
+        </li>
+        <li className="list-group-item">
+          R2-D2
+        </li>
       </ul>
     );
   }
 }
-
-export default ItemList
