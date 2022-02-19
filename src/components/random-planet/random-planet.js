@@ -4,7 +4,6 @@ import './random-planet.css';
 
 
 const Loader = () => <h1>Loading...</h1>
-const Loader = () => <h1>Something went wrong...</h1>
 
 
 const RandomPlanet = () => {
@@ -34,9 +33,6 @@ const RandomPlanet = () => {
       return <Loader />
   }
 
-  if (data.error) {
-      return <Error />
-  }
 
   return (
     <div className="random-planet jumbotron rounded">
