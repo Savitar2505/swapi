@@ -30,7 +30,6 @@ import Loader from "../loader";
             </li>
         )
     })
-    console.log(data.people.name)
      return (
       <ul className="item-list list-group">
           { elements }
