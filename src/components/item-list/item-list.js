@@ -25,7 +25,7 @@ import Loader from "../loader";
 
     const elements = data.people.map((item)=>{
         return(
-            <li className="list-group-item">
+            <li key={item.id} className="list-group-item">
                 {item.name}
             </li>
         )
