@@ -10,9 +10,8 @@ const PersonDetails =()=> {
   })
   const swapi = new SwapiService()
   useEffect(()=>{
-    const id = 1;
+    const id = 4;
     swapi.getPerson(id).then(data => {
-      console.log(data)
       setData({...data, loading: false, error: false})
     }).catch(error => {
       setData({...data, loading: false, error: true})
