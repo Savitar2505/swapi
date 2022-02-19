@@ -1,32 +1,33 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './person-details.css';
-import SwapiService from "../../services/swapi-service";
-import Loader from "../loader";
 
-const PersonDetails =()=> {
+import Loader from "../loader";
+import {Consumer} from "../swapi-context";
+
+const PersonDetails =({selectedItem})=> {
+
   const [data, setData]=useState({
     loading: true,
     error: false
   })
-  const swapi = new SwapiService()
+
+  const swapi = useContext(Consumer)
   useEffect(()=>{
-    const id = 4;
-    swapi.getPerson(id).then(data => {
+    swapi.getPerson(selectedItem).then(data => {
       setData({...data, loading: false, error: false})
     }).catch(error => {
       setData({...data, loading: false, error: true})
     })
-  }, [])
+  }, [selectedItem])
+
   if(data.loading){
     return (
         <Loader />
     )
   }
+
   const {id, name, gender, birthYear, eyeColor} = data
   const imgUrl = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`
-
-
-
 
     return (
       <div className="person-details card">
