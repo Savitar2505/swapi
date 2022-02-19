@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import SwapiService from '../../services/swapi-service';
 import './random-planet.css';
+import Loader from "../loader";
 
-
-const Loader = () => <h1>Loading...</h1>
-const Loader = () => <h1>Something went wrong...</h1>
 
 
 const RandomPlanet = () => {
@@ -12,30 +10,31 @@ const RandomPlanet = () => {
     loading: true,
     error: false,
   })
-  const swapi = new SwapiService()
 
+  const swapi = new SwapiService()
+  const firstPlanet = () => {
+    const id = Math.floor(Math.random() * (20 - 1) + 1);
+    swapi.getPlanet(id).then(data => {
+      setData({...data, loading: false, error: false})
+    }).catch(error => {
+      setData({...data, loading: false, error: true})
+    })
+  }
+  useEffect(()=>{
+    firstPlanet()
+  }, [])
   useEffect(() => {
     const planetInterval = setInterval(() => {
-      const id = Math.floor(Math.random() * (20 - 1) + 1);
-      swapi.getPlanet(id).then(planet => {
-        setData({...data, ...planet, loading: false, error: false})
-      }).catch(error => {
-        setData({...data, loading: false, error: true})
-      })
+      firstPlanet()
     }, 2500)
 
     return () => clearInterval(planetInterval)
   }, [])
-
   const {id, name, population, rotationPeriod, diameter} = data;
   const imageUrl = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
 
   if (data.loading) {
       return <Loader />
-  }
-
-  if (data.error) {
-      return <Error />
   }
 
   return (

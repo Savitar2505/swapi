@@ -1,22 +1,41 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState} from 'react';
 import './item-list.css';
+import SwapiService from "../../services/swapi-service";
+import Loader from "../loader";
 
+ const ItemList =()=>{
+     const [data, setData] = useState (
+         {
+             people: [],
+             loading: true,
+             error: false
+         })
+     const swapi = new SwapiService()
+    useEffect(()=>{
+        swapi.getAllPeople().then(data=>{
+            setData({...data, people: data, loading: false, error: false})
+        }).catch(error=>{
+            setData({...data, loading: false, error: true})
+        })
+    }, [])
 
-export default class ItemList extends Component {
+     if (data.loading) {
+         return <Loader />
+     }
 
-  render() {
-    return (
+    const elements = data.people.map((item)=>{
+        return(
+            <li className="list-group-item">
+                {item.name}
+            </li>
+        )
+    })
+    console.log(data.people.name)
+     return (
       <ul className="item-list list-group">
-        <li className="list-group-item">
-          Luke Skywalker
-        </li>
-        <li className="list-group-item">
-          Darth Vader
-        </li>
-        <li className="list-group-item">
-          R2-D2
-        </li>
+          { elements }
       </ul>
     );
-  }
-}
+ }
+export default ItemList
+
