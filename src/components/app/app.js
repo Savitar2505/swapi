@@ -1,30 +1,22 @@
-import React, {useState} from 'react';
-
+import React from 'react';
+import {Provider} from "../swapi-context";
+import SwapiService from "../../services/swapi-service";
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
-
+import PeoplePage from "../pages";
 import './app.css';
 
-const App = () => {
-  const [showPlanet, setShowPlanet] = useState(true)
+const swapi = new SwapiService()
 
-  const planet = showPlanet ? <RandomPlanet /> : null;
+const App = () => {
 
   return (
     <div>
-      <Header />
-      {planet}
-      <input type='button' value='toggle planet' onClick={() => setShowPlanet(showPlanet => !showPlanet)} />
-      <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList />
-        </div>
-        <div className="col-md-6">
-          <PersonDetails />
-        </div>
-      </div>
+        <Provider value={swapi}>
+            <Header />
+            <RandomPlanet />
+            <PeoplePage/>
+        </Provider>
     </div>
   );
 };

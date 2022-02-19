@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import SwapiService from '../../services/swapi-service';
+import React, {useState, useEffect, useContext} from 'react';
 import './random-planet.css';
 import Loader from "../loader";
-
-
+import {Consumer} from "../swapi-context";
 
 const RandomPlanet = () => {
   const [data, setData] = useState({
@@ -11,7 +9,7 @@ const RandomPlanet = () => {
     error: false,
   })
 
-  const swapi = new SwapiService()
+  const swapi = useContext(Consumer)
   const firstPlanet = () => {
     const id = Math.floor(Math.random() * (20 - 1) + 1);
     swapi.getPlanet(id).then(data => {
