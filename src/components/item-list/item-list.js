@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './item-list.css';
 import Loader from "../loader";
+import WithSwapi from "../hoc";
 
- const ItemList =({setSelectedItem, getData, children})=>{
+ const ItemList =({ setSelectedItem, getData, children })=>{
      const [data, setData] = useState (
          {
              loading: true,
@@ -23,7 +24,7 @@ import Loader from "../loader";
                 className="list-group-item"
                 onClick={()=>setSelectedItem(item.id)}
             >
-                {children(item)}
+                { children(item) }
             </li>
         )
     })
@@ -33,5 +34,9 @@ import Loader from "../loader";
       </ul>
     );
  }
-export default ItemList
+
+ const divideFunc = (swapi) => ({
+   getData:swapi.getAllPeople()
+ })
+export default WithSwapi(ItemList, divideFunc)
 
