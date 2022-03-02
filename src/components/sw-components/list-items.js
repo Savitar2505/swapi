@@ -2,16 +2,34 @@ import ItemList from "../item-list";
 import React from "react";
 import WithSwapi from "../hoc";
 
-const divideFunc =(swapi)=>({
-    getData: swapi.getAllPeople
-})
 
-const PeopleList =(props)=>{
-
-    return (
-        <ItemList {...props}>
-            {(item)=>item.name}
-        </ItemList>
-    )
+const withChildrenFunc = (Component) => {
+    return(props)=>{
+        return(
+            <Component {...props}>
+                {(item)=>item.name}
+            </Component>
+        )
+    }
 }
-export default WithSwapi(PeopleList, divideFunc)
+
+const PeopleList = WithSwapi(
+    withChildrenFunc(ItemList),
+    (swapi)=> ({
+        getData: swapi.getAllPeople
+    })
+)
+const PlanetList = WithSwapi(
+    withChildrenFunc(ItemList),
+    (swapi)=> ({
+        getData: swapi.getAllPlanets
+    })
+)
+const StarshipList = WithSwapi(
+    withChildrenFunc(ItemList),
+    (swapi)=> ({
+        getData: swapi.getAllStarships
+    })
+)
+
+export {PeopleList, PlanetList, StarshipList};
