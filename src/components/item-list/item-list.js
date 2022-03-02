@@ -1,32 +1,29 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import './item-list.css';
 import Loader from "../loader";
-import {Consumer} from "../swapi-context";
 
- const ItemList =({setSelectedItem})=>{
+ const ItemList =({setSelectedItem, getData, children})=>{
      const [data, setData] = useState (
          {
-             people: [],
              loading: true,
              error: false
          })
-     const swapi = useContext(Consumer)
     useEffect(()=>{
-        swapi.getAllPeople().then(data=>{
-            setData({...data, people: data, loading: false, error: false})
-        }).catch(error=>{
-            setData({...data, loading: false, error: true})
-        })
+        getData().then(data=>setData(data))
+            .catch(error=>error)
     }, [])
 
      if (data.loading) {
          return <Loader />
      }
 
-    const elements = data.people.map((item)=>{
+    const elements = data.map((item)=>{
         return(
-            <li key={item.id} className="list-group-item" onClick={()=>setSelectedItem(item.id)}>
-                {item.name}
+            <li key={item.id}
+                className="list-group-item"
+                onClick={()=>setSelectedItem(item.id)}
+            >
+                {children(item)}
             </li>
         )
     })
