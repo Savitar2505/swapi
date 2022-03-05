@@ -24,7 +24,7 @@ const RandomPlanet = () => {
   useEffect(() => {
     const planetInterval = setInterval(() => {
       firstPlanet()
-    }, 2500)
+    }, 5000)
 
     return () => clearInterval(planetInterval)
   }, [])
