@@ -1,15 +1,19 @@
-import React, {useState} from "react";
+import React from "react";
 import {PeopleList, PersonDetails} from '../sw-components'
 import Row from "../row";
+import {withRouter} from "react-router-dom";
 
 
-const PeoplePage = () => {
-    const [selectedItem, setSelectedItem]=useState(1)
+const PeoplePage = ({selectedItem, history}) => {
 
-    const leftElement = <PeopleList setSelectedItem={setSelectedItem}/>
+    const setSelectedItemId =(id)=>{
+        history.push(id)
+    }
+
+    const leftElement = <PeopleList setSelectedItem={setSelectedItemId}/>
     const rightElement = <PersonDetails selectedItem={selectedItem}/>
 
     return <Row left={leftElement} right={rightElement}/>
 }
 
-export default PeoplePage
+export default withRouter(PeoplePage)
